@@ -1,10 +1,14 @@
-import React, { use } from "react";
-import { NavLink } from "react-router";
+// import React, { use } from "react";
+import { Link, NavLink } from "react-router";
 import "./Navbar.css";
+import { use } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
+// import { AuthContext } from "../../contexts/AuthContext";
 // import { AuthContext } from "../../main";
 
 const Navbar = () => {
+  const { user, signOutUser } = use(AuthContext);
+  console.log(user);
   const links = (
     <>
       <li>
@@ -16,14 +20,40 @@ const Navbar = () => {
       <li>
         <NavLink to="/register">Register</NavLink>
       </li>
+      <li>
+        <NavLink to="/dashboard">Dashboard</NavLink>
+      </li>
+      {user && (
+        <>
+          <li>
+            <NavLink to="/orders">Orders</NavLink>
+          </li>
+          <li>
+            <NavLink to="/profile">Profile</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
-  
+
   // const userInfo = use(AuthContext);
   // console.log("userInfo in the navbar: ", userInfo);
 
-  const userInfo = use(AuthContext);
-  console.log("navbar userInfo:", userInfo);
+  // const userInfo = use(AuthContext);
+  // console.log("navbar userInfo:", userInfo);
+
+  // const userInfo = use(AuthContext);
+  // console.log("navbar userInfo:", userInfo);
+
+  const handleSignOut = () => {
+    signOutUser()
+      .then(() => {
+        console.log("User signed out successfully.");
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
+  };
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
@@ -58,8 +88,17 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
+
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        {user ? (
+          <a onClick={handleSignOut} className="btn">
+            Sign Out
+          </a>
+        ) : (
+          <Link to="/login" className="btn">
+            Login
+          </Link>
+        )}
       </div>
     </div>
   );
