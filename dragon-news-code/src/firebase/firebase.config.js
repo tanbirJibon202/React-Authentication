@@ -5,15 +5,13 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyC_RnRz2vmxGBZ3pLe1pdQDiU13yIXn4n0",
-  authDomain: "waadaa-news-breaking.firebaseapp.com",
-  projectId: "waadaa-news-breaking",
-  storageBucket: "waadaa-news-breaking.firebasestorage.app",
-  messagingSenderId: "1027525865525",
-  appId: "1:1027525865525:web:9b8db575ac0a51405dc17c",
+  apiKey: import.meta.env.VITE_apikey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId: import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId,
 };
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-
-
