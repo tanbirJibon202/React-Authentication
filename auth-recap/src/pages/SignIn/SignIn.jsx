@@ -1,8 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router";
 import { valueContext } from "../../rootLayOut/RootLayOut";
 const SignIn = () => {
-  const { handleLogin, setUser } = useContext(valueContext);
+  const { handleLogin } = useContext(valueContext);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,12 +13,11 @@ const SignIn = () => {
       .then((userCredential) => {
         // Signed in
         const currentUser = userCredential.user;
-        setUser(currentUser);
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorMessage);
+        // console.log(errorMessage);
       });
     // console.log("form submitted");
   };

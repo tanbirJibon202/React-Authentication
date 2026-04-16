@@ -1,10 +1,11 @@
-import React from "react";
 import { NavLink, useLocation, useNavigate } from "react-router";
+import { valueContext } from "../../rootLayOut/RootLayOut";
+import { useContext } from "react";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
-
+  const { handleLogOut } = useContext(valueContext);
   return (
     <header className="p-4 bg-gray-500 text-white">
       <div className="container flex justify-between h-16 mx-auto">
@@ -55,6 +56,10 @@ const Navbar = () => {
             className={`self-center px-8 py-3 rounded ${pathname == "/signUp" ? "text-blue-500" : ""}`}
           >
             Sign Up
+          </button>
+
+          <button onClick={handleLogOut} className="self-center px-8 py-3">
+            Log Out
           </button>
         </div>
         <button className="p-4 lg:hidden">

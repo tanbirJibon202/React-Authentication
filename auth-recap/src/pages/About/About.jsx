@@ -3,7 +3,7 @@ import { valueContext } from "../../rootLayOut/RootLayOut";
 
 const About = () => {
   const { user } = useContext(valueContext);
-  console.log(user);
+  // console.log(user);
   return <div></div>;
 };
 
