@@ -6,6 +6,7 @@ import About from "../pages/About/About";
 import SignUp from "../pages/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
 import Blog from "../pages/Blog/Blog";
+import CarDetails from "../pages/CarDetails/CarDetails";
 
 export const router = createBrowserRouter([
   {
@@ -15,6 +16,7 @@ export const router = createBrowserRouter([
       {
         path: "/",
         Component: Home,
+        loader: () => fetch("/data.json"),
       },
       {
         path: "/about",
@@ -31,6 +33,11 @@ export const router = createBrowserRouter([
       {
         path: "/signUp",
         Component: SignUp,
+      },
+      {
+        path: "/cardetails/:id",
+        Component: CarDetails,
+        loader: () => fetch("/data.json"),
       },
     ],
   },

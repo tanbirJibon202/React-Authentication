@@ -8,11 +8,14 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
+import Footer from "../componets/Footer/Footer";
 
 export const valueContext = createContext();
+
 const RootLayOut = () => {
   const [user, setUser] = useState(null);
   console.log(user);
+
   const handleLogin = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
@@ -59,6 +62,7 @@ const RootLayOut = () => {
       <valueContext.Provider value={contextValues}>
         <Navbar></Navbar>
         <Outlet></Outlet>
+        <Footer></Footer>
       </valueContext.Provider>
     </div>
   );
