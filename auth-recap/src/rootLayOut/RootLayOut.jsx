@@ -14,7 +14,8 @@ export const valueContext = createContext();
 
 const RootLayOut = () => {
   const [user, setUser] = useState(null);
-  console.log(user);
+  const [loading, setLoading] = useState(true);
+  // console.log(user);
 
   const handleLogin = (email, password) => {
     return signInWithEmailAndPassword(auth, email, password);
@@ -39,18 +40,13 @@ const RootLayOut = () => {
     handleSignUp,
     user,
     handleLogOut,
+    loading,
   };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      // if (currentUser) {
-      //   const uid = currentUser.uid;
-      //   // ...
-      // } else {
-      //   // User is signed out
-      //   // ...
-      // }
+      setLoading(false);
     });
     return () => {
       unsubscribe();

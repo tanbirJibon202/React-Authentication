@@ -1,8 +1,11 @@
 import React, { useContext } from "react";
-import { NavLink } from "react-router";
+import { NavLink, useLocation, useNavigate } from "react-router";
 import { valueContext } from "../../rootLayOut/RootLayOut";
 const SignIn = () => {
   const { handleLogin } = useContext(valueContext);
+  const location = useLocation();
+  const from = location?.state?.from;
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -13,6 +16,7 @@ const SignIn = () => {
       .then((userCredential) => {
         // Signed in
         const currentUser = userCredential.user;
+        navigate(from ? from : "/");
       })
       .catch((error) => {
         const errorCode = error.code;

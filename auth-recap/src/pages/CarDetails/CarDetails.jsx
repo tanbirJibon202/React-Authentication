@@ -1,7 +1,5 @@
 import React from "react";
-import { useContext } from "react";
-import { useLoaderData, useNavigate, useParams } from "react-router";
-import { valueContext } from "../../rootLayOut/RootLayOut";
+import { useLoaderData, useParams } from "react-router";
 
 const CarDetails = () => {
   const { id } = useParams();
@@ -12,15 +10,6 @@ const CarDetails = () => {
   // console.log(signleData);
   const { daily_rate, make, model, photo, type, year } = signleData.vehicle;
   const { logo, name } = signleData.company;
-
-  const { user } = useContext(valueContext);
-  // console.log(user);
-  // console.log(user.email);
-
-  const navigate = useNavigate();
-  if (!user || !user?.email) {
-    return navigate("/signIn");
-  }
 
   return (
     <div className="flex mx-auto mt-10 flex-col max-w-lg p-6 space-y-6 overflow-hidden rounded-lg shadow-md dark:bg-gray-50 dark:text-gray-800">

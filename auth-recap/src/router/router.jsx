@@ -7,6 +7,7 @@ import SignUp from "../pages/SignUp/SignUp";
 import SignIn from "../pages/SignIn/SignIn";
 import Blog from "../pages/Blog/Blog";
 import CarDetails from "../pages/CarDetails/CarDetails";
+import PrivateRoute from "../componets/PrivateRoute/PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -20,11 +21,20 @@ export const router = createBrowserRouter([
       },
       {
         path: "/about",
-        Component: About,
+        // Component: About,
+        element: (
+          <PrivateRoute>
+            <About></About>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/blog",
-        Component: Blog,
+        element: (
+          <PrivateRoute>
+            <Blog></Blog>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/signIn",
@@ -36,7 +46,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/cardetails/:id",
-        Component: CarDetails,
+        element: (
+          <PrivateRoute>
+            <CarDetails></CarDetails>
+          </PrivateRoute>
+        ),
         loader: () => fetch("/data.json"),
       },
     ],

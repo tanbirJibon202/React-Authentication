@@ -1,10 +1,7 @@
-import React, { useContext } from "react";
-import { valueContext } from "../../rootLayOut/RootLayOut";
+import React from "react";
 
 const About = () => {
-  const { user } = useContext(valueContext);
-  // console.log(user);
-  return <div></div>;
+  return <div>I'am about page</div>;
 };
 
 export default About;
