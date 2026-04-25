@@ -1,8 +1,9 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router";
 import { valueContext } from "../../rootLayOut/RootLayOut";
 const SignIn = () => {
-  const { handleLogin } = useContext(valueContext);
+  const { handleLogin, handleForgetPassword } = useContext(valueContext);
+  const [userEmail, setUserEmail] = useState("");
   const location = useLocation();
   const from = location?.state?.from;
   const navigate = useNavigate();
@@ -95,6 +96,7 @@ const SignIn = () => {
               type="email"
               name="email"
               id="email"
+              onChange={(e) => setUserEmail(e.target.value)}
               placeholder="leroy@jenkins.com"
               className="w-full px-3 py-2 border rounded-md dark:border-gray-300 dark:bg-gray-50 dark:text-gray-800 focus:dark:border-violet-600"
             />
@@ -104,16 +106,17 @@ const SignIn = () => {
               <label htmlFor="password" className="text-sm">
                 Password
               </label>
-              <a
+              <button
+                onClick={() => handleForgetPassword(userEmail)}
                 rel="noopener noreferrer"
                 href="#"
                 className="text-xs hover:underline dark:text-gray-600"
               >
                 Forgot password?
-              </a>
+              </button>
             </div>
             <input
-              type="password"
+              type="text"
               name="password"
               id="password"
               placeholder="*****"

@@ -4,14 +4,13 @@ import Navbar from "../componets/Navbar/Navbar";
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
+  sendPasswordResetEmail,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 import Footer from "../componets/Footer/Footer";
-
 export const valueContext = createContext();
-
 const RootLayOut = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -35,12 +34,20 @@ const RootLayOut = () => {
       });
   };
 
+  const handleForgetPassword = (email) => {
+    console.log(email);
+    sendPasswordResetEmail(auth, email).then(() => {
+      // Password reset email sent!
+      // ..
+    });
+  };
   const contextValues = {
     handleLogin,
     handleSignUp,
     user,
     handleLogOut,
     loading,
+    handleForgetPassword,
   };
 
   useEffect(() => {
