@@ -1,6 +1,9 @@
+import { useContext } from "react";
 import { Link } from "react-router";
+import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Register = () => {
+  const { registerUser } = useContext(AuthContext);
   const handleRegister = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -8,8 +11,8 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     const confirmPassword = e.target.confirmPassword.value;
-
     console.log(name, photo, email, password, confirmPassword);
+    registerUser(email, password);
   };
 
   return (
@@ -28,7 +31,7 @@ const Register = () => {
                 type="text"
                 className="input input-bordered"
                 placeholder="Your Name"
-                required
+                // required
               />
               {/* Photo URL Field */}
               <label className="label pb-2 mt-2">Photo URL</label>{" "}
@@ -38,7 +41,7 @@ const Register = () => {
                 type="text"
                 className="input input-bordered"
                 placeholder="Photo URL"
-                required
+                // required
               />
               {/* Email Field */}
               <label className="label pb-2 mt-2">Email</label>
@@ -47,7 +50,7 @@ const Register = () => {
                 type="email"
                 className="input input-bordered"
                 placeholder="Email"
-                required
+                // required
               />
               {/* Password Field */}
               <label className="label pb-2 mt-2">Password</label>
@@ -56,7 +59,7 @@ const Register = () => {
                 type="password"
                 className="input input-bordered"
                 placeholder="Password"
-                required
+                // required
               />
               {/* Confirm Password Field */}
               <label className="label pb-2 mt-2">Confirm Password</label>
@@ -65,7 +68,7 @@ const Register = () => {
                 type="password"
                 className="input input-bordered"
                 placeholder="Confirm Password"
-                required
+                // required
               />
               <button type="submit" className="btn btn-neutral mt-6 w-full">
                 Register
