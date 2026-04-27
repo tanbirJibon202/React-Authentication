@@ -1,25 +1,32 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 export const AuthContext = createContext(null);
-import { createUserWithEmailAndPassword } from "firebase/auth";
+
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { auth } from "../../Firebase/Firebase.init";
-import { signInWithEmailAndPassword } from "firebase/auth/cordova";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
+
 const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const googleProvider = new GoogleAuthProvider();
+
   const registerUser = (email, password) => {
-    createUserWithEmailAndPassword(auth, email, password).then((result) =>
-      console.log(result.user),
-    );
+    return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const loginUser = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-    .then((result) =>
-      console.log(result.user),
-    );
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
+  const googleLogin = () => {
+    return signInWithPopup(auth, googleProvider);
+  };
   const authInfo = {
     registerUser,
     loginUser,
+    user,
+    setUser,
+    googleLogin,
   };
 
   return (

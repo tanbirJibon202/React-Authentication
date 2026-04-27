@@ -1,9 +1,11 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Register = () => {
-  const { registerUser } = useContext(AuthContext);
+  const { registerUser, setUser } = useContext(AuthContext);
+  const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
   const handleRegister = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -11,8 +13,58 @@ const Register = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     const confirmPassword = e.target.confirmPassword.value;
+
+    if (!/@gmail\.com$/.test(email)) {
+      setEmailError("Please use a valid Gmail address.");
+      return;
+    }
+
+    if (password.length < 6) {
+      setError("Password must be equal or greater the 6");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Password and confirm password must be same");
+      return;
+    }
+
+    if (!/[a-z]/.test(password)) {
+      setError("Password must contain at least one lower case letter");
+      return;
+    }
+
+    if (!/[A-Z]/.test(password)) {
+      setError("Password must contain at least one upper case letter");
+      return;
+    }
+    if (!/\d/.test(password)) {
+      setError("Password must contain at least one number");
+      return;
+    }
+    if (!/[$%^#@]/.test(password)) {
+      setError(
+        "Password must contain at least one special character ($, %, ^, #, @)",
+      );
+      return;
+    }
+    setError("");
+    setEmailError("");
+
     console.log(name, photo, email, password, confirmPassword);
-    registerUser(email, password);
+    registerUser(email, password)
+      .then((result) => {
+        setUser(result.user);
+      })
+      .catch((error) => {
+        const rawError = error.message.split("/")[1] || error.message;
+        let cleanError = rawError
+          .replace(/-/g, " ")
+          .replace(/[).]/g, "")
+          .trim();
+        const finalizedError =
+          cleanError.charAt(0).toUpperCase() + cleanError.slice(1);
+        setError(finalizedError);
+      });
   };
 
   return (
@@ -52,6 +104,9 @@ const Register = () => {
                 placeholder="Email"
                 // required
               />
+              {emailError && (
+                <small className="text-red-500">{emailError}</small>
+              )}
               {/* Password Field */}
               <label className="label pb-2 mt-2">Password</label>
               <input
@@ -70,6 +125,7 @@ const Register = () => {
                 placeholder="Confirm Password"
                 // required
               />
+              {error && <small className="text-red-500">{error}</small>}
               <button type="submit" className="btn btn-neutral mt-6 w-full">
                 Register
               </button>
