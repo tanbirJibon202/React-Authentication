@@ -1,9 +1,12 @@
-import { useContext } from "react";
-import { Link } from "react-router";
+import { useContext, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router";
 import { AuthContext } from "../AuthProvider/AuthProvider";
 
 const Login = () => {
-  const { loginUser, googleLogin, setUser } = useContext(AuthContext);
+  const { loginUser, googleLogin, setUser, user } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(location);
   const handleLogin = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -13,9 +16,16 @@ const Login = () => {
   };
 
   const handleGoogleLogin = () => {
-    googleLogin().then((result) => setUser(result.user));
+    googleLogin().then((result) => {
+      setUser(result.user);
+      navigate(location.state);
+    });
   };
-
+  useEffect(() => {
+    if (user) {
+      navigate(location.state);
+    }
+  }, [user]);
   return (
     <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col w-full">
