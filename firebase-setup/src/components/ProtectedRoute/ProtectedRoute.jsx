@@ -6,7 +6,14 @@ const ProtectedRoute = ({ children }) => {
   // console.log(children);
   const location = useLocation();
   // console.log(location);
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-bars loading-xl"></span>
+      </div>
+    );
+  }
   if (user) {
     return children;
   } else return <Navigate to="/login" state={location.pathname}></Navigate>;
